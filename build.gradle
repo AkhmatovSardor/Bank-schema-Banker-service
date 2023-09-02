@@ -1,14 +1,14 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.0.9'
-	id 'io.spring.dependency-management' version '1.1.2'
+	id 'org.springframework.boot' version '3.0.8'
+	id 'io.spring.dependency-management' version '1.1.0'
 }
 
 group = 'com.company'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '20'
+	sourceCompatibility = '17'
 }
 
 configurations {
@@ -20,14 +20,33 @@ configurations {
 repositories {
 	mavenCentral()
 }
-
+ext {
+	set('springCloudVersion', "2022.0.3")
+}
 dependencies {
+	implementation 'io.github.resilience4j:resilience4j-spring-boot2:2.0.1'
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+	implementation 'org.jetbrains:annotations:24.0.0'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+	implementation "io.github.resilience4j:resilience4j-all:2.0.2"
+	implementation 'io.swagger.core.v3:swagger-annotations-jakarta:2.2.7' // swagger
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.cloud:spring-cloud-config-client:4.0.1'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation'org.springframework.boot:spring-boot-starter-validation'
 	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
-
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
 tasks.named('test') {
 	useJUnitPlatform()
 }

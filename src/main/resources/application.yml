@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: banker-service
+  cloud:
+    config:
+      uri: http://localhost:8888/
+      label: develop
+  config:
+    import: optional:configserver:http://localhost:8888/
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    preferIpAddress: true
+
+server:
+  port: 8011
+  servlet:
+    context-path: /banker-service
+
+# localhost:8888/book-service/dev/Sardor
